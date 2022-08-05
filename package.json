@@ -1,0 +1,17 @@
+{
+  "name": "unichat",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "nodemon start index.js && nodemon start /server/server.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.18.1",
+    "http": "0.0.1-security",
+    "socket.io-client": "^4.5.1"
+  }
+}
