@@ -1,0 +1,354 @@
+@font-face {
+    font-family: 'Norwester';
+    src: url('./fonts/norwester.otf') format('opentype');
+}
+html {
+    height: 100%;
+    margin: 0px !important;
+    padding: 0px;
+    overflow: hidden;
+}
+body {
+    height: 100%;
+    margin: 0px !important;
+    padding: 0px;
+    overflow: hidden;
+
+}
+header {
+    position: fixed;
+    top: 0;
+    right: 0;
+    left: 0;
+    height: 60px;
+    background-color: #f74d4d;
+    z-index: 1000;
+
+}
+.cont {
+    display: flex;
+    width: 100%;
+    height: 100%;
+}
+.c1 {
+    width: 25%;
+    height: 100%;
+    background-color: #c0c0c0;
+    display: flex;
+}
+.c2 {
+    width: 75%;
+}
+.mymessage {
+    border-radius: 20px 20px 20px 0px;
+    background: linear-gradient(to left, #f74d4d, #ff5757);
+    margin-left: 10px;
+    width: 40%;
+    height: 80%;
+    font-family: sans-serif;
+    color: white;
+    font-size: 18px;
+    padding: 10px;
+}
+.message {
+    border-radius: 20px 20px 0px 20px;
+    background: linear-gradient(to left, #4d89f7, #055ee4);
+    margin-left: calc(60% - 40px);
+    width: 40%;
+    height: 80%;
+    font-family: sans-serif;
+    color: white;
+    font-size: 18px;
+    padding: 10px;
+
+}
+.msgsbox {
+    margin-top: 80px;
+    max-height: 80%;
+    overflow-y: scroll;
+}
+
+.nav-text {
+    color: #fff;
+    font-size: 30px;
+    top: -20%;
+    font-family: 'Norwester';
+    position: absolute;
+    margin-left: 30px;
+}
+ul {
+    list-style: none;
+    float: right;
+    margin-right: 40px;
+}
+li {
+    display: inline-block;
+    text-align: center;
+    font-size: 20px;
+    font-family: 'Norwester';
+    margin-left: 60px;
+    color: white;
+}
+.menu-ul {
+    display: none;
+}
+.msgbar {
+    position: fixed;
+    width: 100%;
+    bottom: 0;
+    padding-bottom: 5px;
+    height: 50px;
+    padding-top: 10px;
+    background: white;
+    box-shadow: 10px 10px 5px 10px #c0c0c0;
+}
+input {
+    height: 80%;
+    width: 50%;
+    border: 2px solid rgb(0, 102, 255);
+    border-radius: 5px;
+    z-index: 1000;
+    margin-left: 10px;
+    font-family: 'Montserrat';
+    font-size: 16px;
+    padding-left: 10px;
+}
+input:focus {
+    outline: none;
+}
+.img {
+    font-size: 25px;
+    color:rgb(0, 102, 255);
+    margin-left: 20px;
+}
+.img:hover {
+    cursor: pointer;
+}
+#addimg {
+    display: none;
+}
+.send {
+    height: 90%;
+    width: 18%;
+    background: rgb(21, 113, 250);
+    color: white;
+    font-family: 'Josefin Sans';
+    font-size: 20px;
+    border-radius: 5px;
+    float: right;
+    margin-right: 26%;
+    outline: none;
+    border: none;
+    box-shadow: 3px 3px 10px .5px rgb(48, 48, 48);
+}
+.send:hover {
+    cursor: pointer;
+}
+.user {
+    width: 100%;
+    height: 70px;
+    background: #000;
+    color: white;
+    font-family: 'Montserrat';
+    font-size: 20px;
+    margin-top: 60px;
+}
+.room {
+    width: 25%;
+    height: 50px;
+    color: white;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+}
+#rooma {
+    font-size: 18px;
+    font-family: 'sans-serif';
+    color: black;
+    height: 75%;
+    border: rgb(33, 151, 4) solid 2px;
+
+}
+.join {
+    width: 40%;
+    height: 80%;
+    background: linear-gradient(to left, #39ff54, #0ed176);
+    color: white;
+    font-family: 'Montserrat';
+    border-radius: 5px;
+    font-size: 15px;
+    font-weight: bold;
+    border: none;
+    outline: none;
+    box-shadow: 3px 3px 10px .5px rgb(48, 48, 48);
+
+}
+.joinbar {
+    display: none;
+}
+.sendbar {
+    height: 100%;
+}
+.join:hover {
+    transition: 1s;
+    cursor: pointer;
+    color: rgb(5, 207, 5);
+    background: white;
+    border: 1px solid rgb(5, 207, 5);
+}
+.username {
+    font-size: 15px;
+    font-family: 'Montserrat';
+    color: white;
+    margin-left: 10px;
+
+}
+.id {
+    font-size: 15px;
+    font-family: 'Montserrat';
+    color: white;
+    margin-left: 15px;
+
+}
+.myImg {
+    margin-left: 10px;
+    border-radius: 10px;
+    max-width: 500px;
+}
+.sImg {
+    margin-left: calc(60% - 40px);
+    border-radius: 10px;
+    max-width: 500px;
+
+}
+.menu {
+    position: absolute;
+    right: 0;
+    padding: 20px;
+    font-size: 25px;
+    color: white;
+    font-weight: bold;
+    
+}
+.menu:hover {
+    cursor: pointer;
+}
+.close {
+    position: absolute;
+    right: 0;
+    padding: 20px;
+    font-size: 25px;
+    color: rgb(0, 0, 0);
+    font-weight: bold;
+    z-index: 3000;
+}
+#exit {
+    display: none;
+}
+#menu {
+    display: none;
+}
+@media screen and (max-width: 500px)  {
+    span {
+        display: none;
+    }
+    .c1 {
+        display: none;
+    }
+    .c2 {
+        width: 100%;
+    }
+    #menu {
+        display: block;
+    }
+    #exit {
+        display: block;
+    }
+    ul {
+        display: none;
+    }
+    .message {
+        margin-left: calc(60% - 30px);
+        font-size: 15px;
+    }
+    .mymessage {
+        font-size: 15px;
+    }
+    input {
+        width: 68%;
+        font-size: 14px;
+        border-width: 1px;
+        height: 95%;
+    }
+    .send {
+        height: 45px;
+        width: 45px;
+        margin-right: 10px;
+        border-radius: 50%;
+        font-size: 18px;
+        margin-top: -5px;
+        background: linear-gradient(to left bottom, #54bbff, #1453ff);
+        box-shadow: 0px 0px 5px 2px rgb(134, 132, 132, 0.4);
+    }
+    .nav-text {
+        font-size: 27px;
+        margin-left: 10px;
+        top: -15%;
+
+    }
+    .img {
+        font-size: 25px;
+        margin-left: 5px;
+    }
+    .menu-cont {
+        top: 0;
+        position: absolute;
+        background: whitesmoke;
+        height: 100%;
+        width: 100%;
+        display: none;
+    }
+    .menu-ul {
+        text-align: center;
+        display: block;
+        float: none;
+        margin-top: 40%;
+    }
+    .menu-li {
+        justify-content: center;
+        text-align: center;
+        display: block;
+        color: #000;
+        margin-top: 20%;
+        margin-left: 0px;
+        transform: translate(0, 50%);
+        
+    }
+    .menu {
+        display: block;
+    }
+    .close {
+        display: block;
+    }
+    .msgbar {
+        height: 40px;
+    }
+    .sendbar {
+        display: none;
+        height: 100%;
+    }
+    .joinbar {
+        display: block;
+        height: 100%;
+    }
+    #room {
+        height: 90%;
+        width: 60%;
+        font-family: sans-serif;
+        text-align: center;
+    }
+    .join {
+        width: 30%;
+        height: 100%;
+    }
+}

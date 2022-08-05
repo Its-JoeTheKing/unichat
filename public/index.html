@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UniChat</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/css/all.min.css" integrity="sha512-1sCRPdkRXhBV2PBLUdRb4tMg1w2YPf37qatUFeS7zlBy7jJI8Lf4VHwWfZZfpXtYSLy85pkm9GaYVYMfw5BC1A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Acme&family=Bebas+Neue&family=Bree+Serif&family=Josefin+Sans&family=Lato:wght@300&family=Montserrat:wght@500&family=Poppins:wght@500&family=Roboto:wght@500&family=Russo+One&family=Teko&display=swap" rel="stylesheet"> 
+    
+</head>
+<body>
+    <div class="menu-cont">
+        <div id="exit" onclick="toggle()"><i class="fa-solid fa-xmark close"></i></div>
+        <ul class="menu-ul">
+            <li class="menu-li">Contact</li>
+            <li class="menu-li">Donate</li>
+            <li class="menu-li">About</li>
+        </ul>
+    </div>
+    <header>
+        <nav>
+            <h2 class="nav-text">UniChat  <i class="fa-regular fa-comment-dots"></i></h2>
+            <ul>
+                <li>Contact</li>
+                <li>Donate</li>
+                <li>About</li>
+            </ul>
+            <div id="menu" onclick="toggle()"><i class="fas fa-bars menu" ></i></div>
+        </nav>
+    </header>
+    <div class="cont">
+        <div class="c1">
+            <div class="user">
+                <p class="username" id="username"></p>
+                <p class="id" id="id"></p>
+            </div>
+            <div class="room">
+                <input type="text" id="rooma" placeholder="Room Id or Username"/>
+                <button class="join" id="join" onclick="join()" >join</button>
+            </div>
+        </div>
+        <div class="c2" id="msag">
+            <div class="msgsbox" id="msgsbox">
+                
+            </div>
+            <div class="msgbar">
+                <div class="sendbar">
+                    <input type="text" id="msg" placeholder="Message To Send" disabled/>
+                    <input type="file" id="addimg" onchange="upload()" />
+                    <i class="fa-solid fa-file-image img" id="addimgs" onclick="upld()"></i>
+                    <button class="send" onclick="send()" ><span>Send</span> <i class="fa-solid fa-paper-plane"></i></button>
+                </div>
+                <div class="joinbar">
+                    <input type="text" id="room" placeholder="Room Id or Username"/>
+                    <button class="join" id="join" onclick="join()" >join</button>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+</body>
+<script src="socket.io.min.js" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+<script>
+    const socket = io("http://localhost:3000");
+    var users = [];
+    var user = prompt("Enter your username");
+    var room = socket.id;
+    
+    // check connection
+    
+    if (socket.connected) {
+        console.log("connected");
+        socket.emit('join-room',room);
+        document.getElementById('username').innerHTML = 'Username: '+ user;
+        document.getElementById('id').innerHTML = 'ID: '+ socket.id;
+        socket.emit('new-user', user); 
+
+    }
+    // geting public messages
+    socket.on('receive-message',(msg,id,usr)=>{
+        document.getElementById('msg').removeAttribute('disabled');
+        if (msg.includes('data:image')) {
+            if (socket.id == id) {
+                document.getElementById('msgsbox').innerHTML += '<img class="myImg" src="'+msg+'" alt=""/><br>';
+            } else {
+                document.getElementById('msgsbox').innerHTML += '<img class="sImg" src="'+msg+'" alt=""/><br>';
+            }
+        } else {
+            if (socket.id == id) {
+                document.getElementById('msgsbox').innerHTML += '<h2 class="mymessage">'+ usr + ' : ' + msg + '</h2>';
+            } else {
+                document.getElementById('msgsbox').innerHTML += '<h2 class="message">' + usr + ' : ' + msg + '</h2>';
+            }
+        }
+        console.log(msg,id);
+    }); 
+    //fucntions
+
+    // sending private messages
+    const privMessage = (msg,id,room,user) => {
+        socket.emit('priv-message',msg,id,room,user);
+    }
+
+
+    // sending messages
+    
+    document.getElementById('msg').addEventListener('keydown', function(e){
+        if(e.keyCode == 13){
+            send();
+        }
+    });
+
+    // joining rooms
+    document.getElementById('rooma').addEventListener('keydown', function(e){
+        if(e.keyCode == 13){
+            join();
+        }
+    });
+
+    
+    // send messages
+    var send = () => {
+        var msg = document.getElementById('msg').value;
+        document.getElementById('msg').value = '';
+        if (msg == '') return false;
+        if (room != '') {
+            privMessage(msg,socket.id,room,user);
+        }
+        
+    }
+
+    // join rooms
+
+    var join = () => {
+        
+        room = document.getElementById('rooma').value || document.getElementById('room').value;
+        if (room != '') {
+            socket.emit('join-room',room);
+            document.getElementsByClassName('joinbar')[0].style.display = 'none';
+            document.getElementsByClassName('sendbar')[0].style.display = 'none';
+            $('.joinbar').hide();
+            $('.sendbar').show();
+            document.getElementById('msg').removeAttribute('disabled');
+            document.getElementById('username').innerHTML = user + ' in ' + room;
+        }
+        
+    }
+
+    // upload image and convert
+    var upload = () => {
+        var img = document.getElementById('addimg').files[0];
+        var reader = new FileReader();
+        reader.readAsDataURL(img);
+        reader.onload = function(e){
+            var img = e.target.result;
+            var msg = img;
+            if (room != '') {
+                privMessage(msg,socket.id,room);
+            } else {
+                sendMessage(msg,socket.id);
+            }
+        }
+    }
+
+    // upload click handler
+    var upld = () => {
+        document.getElementById('addimg').click();
+    }
+    
+    
+</script>
+<script>
+    var toggle = () => {
+        $('.cont').toggle();
+        $('header').toggle();
+        $('.menu-cont').animate(
+            {
+                width: 'toggle'
+            },
+            {
+                duration: 500,
+                easing: 'swing'
+            }
+        );
+    };
+    
+</script>
+</html>
