@@ -16,9 +16,6 @@ app.get('/', (req,res)=>{
     
 })
 
-http.createServer(app).listen(80, ()=>{
+http.createServer(app).listen(process.env.PORT || 80, ()=>{
     console.log('HTTP Server running on port 80');
-});
-https.createServer(app).listen(443,()=>{
-    console.log('Server is running on port 443');
 });
