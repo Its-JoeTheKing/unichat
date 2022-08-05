@@ -71,12 +71,13 @@
     const socket = io("https://unichat-server.herokuapp.com");
     var users = [];
     var user = prompt("Enter your username");
-    var room = socket.id;
+    
     
     // check connection
     
     if (socket.connected) {
         console.log("connected");
+        var room = socket.id;
         socket.emit('join-room',room);
         document.getElementById('username').innerHTML = 'Username: '+ user;
         document.getElementById('id').innerHTML = 'ID: '+ socket.id;
